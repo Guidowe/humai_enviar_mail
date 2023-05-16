@@ -1,31 +1,25 @@
-name: Enviar correo
+import os
+import smtplib
+from email.message import EmailMessage
 
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 */3 * * *'  # se ejecuta cada 3 horas
+user_gmail = os.getenv('USER_GMAIL')
+password_gmail = os.getenv('PASSWORD_GMAIL')
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
 
-    - name: Configuración del entorno Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.10'
+def send_notifying_mail(mail_user: str = "", mail_password: str = "") -> None:
+    # aqui va tu codigo
+    msg = EmailMessage()
+    msg['From']=mail_user
+    msg['To']=mail_user
+    msg['Subject']= "Probando mandar mails!"
+    cuerpo_del_mail = 'Este es un mail enviado con Python en la clase! =D'
+    msg.set_content(cuerpo_del_mail)
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(mail_user, mail_password)
+    # enviar
+    server.send_message(msg)
+    server.quit();
 
-    - name: Instalar dependencias
-      run: | # aqui puedes instalar usando el requirements.txt
-        python -m pip install --upgrade pip
-        pip install pandas
-
-    - name: Ejecutar script Python
-      run: python3 enviar_mail.py
-      env:
-        USER_GMAIL: ${{ secrets.USER_GMAIL }}
-        PASSWORD_GMAIL: ${{ secrets.PASSWORD_GMAIL }}
-   if __name__ == "__main__":
-      enviar_mail(usuario, contraseña) # modificar segun se llame tu funcion y parametros1
+if __name__ == "__main__":
+  send_notifying_mail(user_gmail, password_gmail) # modificar segun se llame tu funcion y parametros1
