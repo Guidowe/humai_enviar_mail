@@ -2,8 +2,8 @@ name: Enviar correo
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 */3 * * *'  # se ejecuta cada 3 horas
+#  schedule:
+#    - cron: '0 */3 * * *'  # se ejecuta cada 3 horas
 
 jobs:
   build:
