@@ -27,3 +27,5 @@ jobs:
       env:
         USER_GMAIL: ${{ secrets.USER_GMAIL }}
         PASSWORD_GMAIL: ${{ secrets.PASSWORD_GMAIL }}
+   if __name__ == "__main__":
+      enviar_mail(usuario, contraseña) # modificar segun se llame tu funcion y parametros1
